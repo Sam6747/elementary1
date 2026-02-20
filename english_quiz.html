@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Grammar Quiz — Elementary</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1915;
+    --surface2: #242218;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f2ead8;
+    --cream-dim: #b8ad95;
+    --red: #c0392b;
+    --green: #27ae60;
+    --green-light: #2ecc71;
+    --text: #e8e0cc;
+    --text-dim: #8c8270;
+    --border: #2e2c26;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .header-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 5px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+
+  header h1 span { color: var(--gold); }
+
+  .header-sub {
+    margin-top: 14px;
+    color: var(--text-dim);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.3s forwards;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    height: 8px;
+    margin-bottom: 32px;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.4s forwards;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.35s forwards;
+  }
+
+  .progress-label span { color: var(--gold); font-weight: 600; }
+
+  /* TEST SELECTOR */
+  .test-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease 0.45s forwards;
+  }
+
+  .test-tab {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .test-tab:hover { border-color: var(--gold); color: var(--gold); }
+
+  .test-tab.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0f0e0c;
+    font-weight: 600;
+  }
+
+  /* TEST TITLE */
+  .test-header {
+    margin-bottom: 28px;
+  }
+
+  .test-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--cream);
+  }
+
+  .test-header p {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .test-header .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .topic-tag {
+    font-size: 0.75rem;
+    padding: 3px 12px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 100px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  .question-card:hover { border-color: #3a3828; }
+
+  .question-number {
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .question-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .question-text {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--cream);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .blank { 
+    display: inline-block;
+    border-bottom: 2px solid var(--gold);
+    min-width: 70px;
+    color: var(--gold-light);
+    font-style: italic;
+    padding: 0 4px;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 520px) {
+    .options { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(201,168,76,0.05);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .option-btn:hover:not(:disabled)::before { opacity: 1; }
+  .option-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--cream); }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--gold);
+    transition: all 0.2s;
+  }
+
+  .option-btn:hover:not(:disabled) .option-label {
+    background: var(--gold);
+    color: #0f0e0c;
+    border-color: var(--gold);
+  }
+
+  .option-btn:disabled { cursor: default; }
+
+  .option-btn.correct {
+    border-color: var(--green);
+    background: rgba(39,174,96,0.1);
+    color: var(--cream);
+  }
+
+  .option-btn.correct .option-label {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .option-btn.wrong {
+    border-color: var(--red);
+    background: rgba(192,57,43,0.1);
+    color: var(--text-dim);
+  }
+
+  .option-btn.wrong .option-label {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+
+  .option-btn.show-correct {
+    border-color: var(--green);
+    background: rgba(39,174,96,0.08);
+  }
+
+  /* EXPLANATION */
+  .explanation {
+    margin-top: 16px;
+    padding: 16px 18px;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--cream-dim);
+    display: none;
+    animation: fadeUp 0.3s ease forwards;
+  }
+
+  .explanation.visible { display: block; }
+
+  .explanation strong {
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .explanation .uz-label {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* STATUS INDICATOR */
+  .question-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.1rem;
+  }
+
+  .question-card { position: relative; }
+
+  /* SCORE CARD */
+  .score-card {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 32px;
+    display: none;
+  }
+
+  .score-card.visible { display: block; }
+
+  .score-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .score-total {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  .score-msg {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: var(--cream);
+    font-style: italic;
+  }
+
+  .score-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border-radius: 100px;
+    border: none;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: #0f0e0c;
+    font-weight: 700;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* NAVIGATION */
+  .nav-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stats-mini {
+    display: flex;
+    gap: 20px;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .stat-value.correct-color { color: var(--green-light); }
+  .stat-value.wrong-color { color: var(--red); }
+  .stat-value.gold-color { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .loading { animation: pulse 1s infinite; }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .question-card { padding: 20px 18px; }
+    header { padding: 40px 0 30px; }
+    .score-card { padding: 28px 20px; }
+    .score-number { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-badge">Book 1 · Part A</div>
+    <h1>English <span>Grammar</span> Quiz</h1>
+    <p class="header-sub">Elementary Level — with Uzbek explanations · O'zbek tushuntirishlar bilan</p>
+  </header>
+
+  <div class="progress-label">
+    <span id="progressText">0 / 0 answered</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar-wrapper">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="test-tabs" id="testTabs"></div>
+
+  <div id="scoreCard" class="score-card">
+    <div class="score-number" id="scoreNum">0</div>
+    <div class="score-total" id="scoreTotal">out of 0 questions</div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <div class="score-actions">
+      <button class="btn btn-gold" onclick="retryTest()">Qaytadan urinish</button>
+      <button class="btn btn-outline" onclick="reviewAnswers()">Ko'rib chiqish</button>
+    </div>
+  </div>
+
+  <div id="testHeader" class="test-header">
+    <h2 id="testTitle"></h2>
+    <p id="testSubtitle"></p>
+    <div class="topics" id="testTopics"></div>
+  </div>
+
+  <div id="questionsContainer"></div>
+
+  <div class="nav-footer">
+    <div class="stats-mini">
+      <div class="stat-item">
+        <span class="stat-value correct-color" id="statCorrect">0</span>
+        <span class="stat-label">To'g'ri</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value wrong-color" id="statWrong">0</span>
+        <span class="stat-label">Noto'g'ri</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value gold-color" id="statRemaining">0</span>
+        <span class="stat-label">Qoldi</span>
+      </div>
+    </div>
+    <button class="btn btn-gold" id="checkBtn" onclick="checkAll()" style="display:none">
+      Natijani tekshirish
+    </button>
+  </div>
+</div>
+
+<script>
+const tests = [
+  {
+    id: 1,
+    title: "Test 1 — Verb To Be & Basics",
+    subtitle: "Articles, pronouns, and to be",
+    topics: ["Verb to be: am/is/are", "Possessive adjectives", "Articles a/an", "Plural nouns", "Numbers"],
+    questions: [
+      { q: "Hello, what ______ your name?", opts: ["is","are","am","be"], ans: 0,
+        exp: "<strong>is</strong> ishlatiladi, chunki 'your name' — uchinchi shaxs birlik (3rd person singular). Savol: What is your name? = Ismingiz nima?" },
+      { q: "______ name is John. And my ______ is Johnson.", opts: ["Your / surname","My / surname","I / surname","I / name"], ans: 1,
+        exp: "<strong>My</strong> — 'menning' demak (1-shaxs egalilik olmoshi). <strong>surname</strong> — familiya. 'My name is John. My surname is Johnson.'" },
+      { q: "My name is Lisa. ______ Lisa Peterson.", opts: ["My am","I is","I am","I"], ans: 2,
+        exp: "<strong>I am</strong> — 1-shaxs birlik uchun to'liq shakl. 'I am Lisa Peterson.' = 'Men Lisa Petersonman.'" },
+      { q: "______ name is Apple. ______ Ann Apple.", opts: ["His / She","His / Hes","Her / Shes","His / His"], ans: 1,
+        exp: "Ann — ayol ismi. <strong>Her</strong> — 'uning' (ayol uchun egalilik olmoshi). <strong>She's</strong> = She is. 'Her name is Ann Apple. She's Ann Apple.'" },
+      { q: "Where ______ John from? ______ from the US.", opts: ["is / He's","is / His","am / He's","is / She's"], ans: 0,
+        exp: "<strong>is</strong> — John uchinchi shaxs birlik. <strong>He's</strong> = He is — erkak uchun. 'Where is John from? He is from the US.'" },
+      { q: "______ are you from? Japan.", opts: ["What","Who","Where","When"], ans: 2,
+        exp: "<strong>Where</strong> — joy so'rash uchun (qaerdan?). 'Where are you from?' = 'Siz qayerdansiz?' Javob: Japan." },
+      { q: "Where ______ you ______ ?", opts: ["is / from","are / in","are / is","are / from"], ans: 3,
+        exp: "<strong>are</strong> — 'you' bilan ishlatiladi. <strong>from</strong> — kelib chiqish joyi. 'Where are you from?' = 'Siz qayerdansiz?'" },
+      { q: "______ from Spain. Im Rodriguez.", opts: ["I'm","He's","You're","She's"], ans: 0,
+        exp: "<strong>I'm</strong> = I am — birinchi shaxs birlik. 'I'm from Spain' = 'Men Ispaniyalikman.'" },
+      { q: "Pierre is a French boy. ______ from ______ .", opts: ["He's / France","His / French","His / France","He / France"], ans: 0,
+        exp: "<strong>He's</strong> = He is (erkak uchun). Mamlakat nomi — <strong>France</strong>, millat belgisi — French. 'He's from France.'" },
+      { q: "Lisa and Max are Americans. ______ from U.S.A.", opts: ["There","Their","They're","Theirre"], ans: 2,
+        exp: "<strong>They're</strong> = They are — ko'plik uchun. 'They are from USA.' = 'Ular AQSHdan.' Their = ularning (egalilik), There = u yerda." },
+      { q: "What ____ their _____? Alexander and Philip.", opts: ["are/names","is / name","is / names","are / names"], ans: 3,
+        exp: "<strong>are</strong> + <strong>names</strong> — ko'plik. 'What are their names?' = 'Ularning ismlari nima?' (ikki kishi haqida so'ralmoqda)" },
+      { q: "I ______ 22 years old, but Andrew ______ 20.", opts: ["am / am","are / am","am / is","are / are"], ans: 2,
+        exp: "<strong>am</strong> — I bilan; <strong>is</strong> — Andrew (u-uchinchi shaxs) bilan. 'I am 22, Andrew is 20.'" },
+      { q: "Mark ______ 19, but Brian and Denis ______ 26 and 28.", opts: ["is / are","are / is","are / are","am / are"], ans: 0,
+        exp: "<strong>is</strong> — Mark (birlik, 3-shaxs). <strong>are</strong> — Brian and Denis (ko'plik). 'Mark is 19, Brian and Denis are 26 and 28.'" },
+      { q: "What ______ this? It's ______ umbrella.", opts: ["are / a","is / a","is / an","it's / an"], ans: 2,
+        exp: "<strong>is</strong> — 'this' bilan birlik. <strong>an</strong> — unli harf bilan boshlangan so'z oldidan (umbrella — u bilan). 'What is this? It's an umbrella.'" },
+      { q: "Oxford is ______ English university.", opts: ["an","the","a","*"], ans: 0,
+        exp: "<strong>an</strong> — 'English' unli [e] tovushi bilan boshlanganidek talaffuz qilinadi. 'Oxford is an English university.' Undosh bilan boshlangan so'z oldidan 'a', unli bilan boshlanganda 'an'." },
+      { q: "Toyota's ______ Japanese ______ .", opts: ["is a / car","is / car","are / cars","is / cars"], ans: 2,
+        exp: "<strong>are / cars</strong> — Toyota's = Toyotas (ko'plik egalilik). Ko'plik uchun 'are' va 'cars'. 'Toyotas are Japanese cars.'" },
+      { q: "What is ______ ? She is a bank manager.", opts: ["his job","she job","he job","her job"], ans: 3,
+        exp: "<strong>her job</strong> — 'She' = ayol uchun <strong>her</strong> (egalilik). 'What is her job? She is a bank manager.'" },
+      { q: "0/2/11/18/20 — Find the correct alternative.", opts: ["oh / twelve / eighteen / twenty","zero / two / one-one / eighteen / twenty","zero / two / eleven / eighteen / twenty","zero / two / eleven / eighty / twenty"], ans: 2,
+        exp: "<strong>zero</strong>=0, <strong>two</strong>=2, <strong>eleven</strong>=11, <strong>eighteen</strong>=18, <strong>twenty</strong>=20. 11 — 'eleven' deyiladi, '18' — 'eighteen', '20' — 'twenty'." },
+      { q: "How old is your aunt? ______ is 29.", opts: ["She","He","She's","He's"], ans: 0,
+        exp: "<strong>She</strong> — aunt (xola/amaki) ayol, shuning uchun 'She'. Qisqa javobda subject pronoun ishlatiladi. 'She is 29.'", },
+      { q: "Where ______ she from? She ______ from Japan.", opts: ["are / is","is / is","is / am","are / are"], ans: 1,
+        exp: "<strong>is</strong> — 'she' bilan doim 'is' ishlatiladi. 'Where is she from? She is from Japan.'" },
+      { q: "This ______ my friend. ______ name's Richard.", opts: ["are / His","is / My","is / His","his / His"], ans: 2,
+        exp: "<strong>is</strong> — 'this' birlik. <strong>His</strong> — Richard erkak, shuning uchun 'His name is Richard.'" },
+      { q: "They ______ Lisa and Max. They ______ from the USA.", opts: ["is / is","are / is","are / are","is / is"], ans: 2,
+        exp: "<strong>are</strong> — 'they' ko'plik. Ikki jumlada ham 'are' ishlatiladi. 'They are Lisa and Max. They are from the USA.'" },
+      { q: "What is ______ name? My name's Carlos.", opts: ["his","her","your","my"], ans: 2,
+        exp: "<strong>your</strong> — suhbatdoshdan so'raganda 'your' (sening/sizning). 'What is your name? My name is Carlos.'" },
+      { q: "This is my sister. ______ name is Laura.", opts: ["His","My","Her","Its"], ans: 2,
+        exp: "<strong>Her</strong> — sister (singil/opa) ayol, shuning uchun 'her'. 'Her name is Laura.' = 'Uning ismi Laura.'" },
+      { q: "I have ______ brother. ______ name is David.", opts: ["an / His","a / Her","a / His","* / His"], ans: 2,
+        exp: "<strong>a</strong> — brother undosh bilan boshlanadi. <strong>His</strong> — brother erkak. 'I have a brother. His name is David.'" },
+      { q: "Hello! My ___ ___ Maria. I ___ ___ Mexico.", opts: ["name is / from am","is name / from am","name is / am from","name am / is from"], ans: 2,
+        exp: "<strong>name is</strong> — 'My name is Maria.' = 'Mening ismim Maria.' <strong>am from</strong> — 'I am from Mexico.' = 'Men Meksikadanman.'" },
+      { q: "Is Catherine ______ sister?", opts: ["he","you","your","yours"], ans: 2,
+        exp: "<strong>your</strong> — egalilik sifat olmoshi (possessive adjective). 'Is Catherine your sister?' = 'Ketrin sening singlinging/opangmi?'" },
+      { q: "We ______ students.", opts: ["are a","is","are","am"], ans: 2,
+        exp: "<strong>are</strong> — 'we' (biz) ko'plik uchun. 'We are students.' = 'Biz talabamiz/o'quvchimiz.'" },
+      { q: "I ______ student.", opts: ["is / an","am / *","am / a","am / the"], ans: 2,
+        exp: "<strong>am</strong> — I bilan. <strong>a</strong> — 'student' undosh bilan boshlanadi. 'I am a student.' = 'Men o'quvchiman.'" },
+      { q: "She ______ Italy.", opts: ["are from","is at","is from","am from"], ans: 2,
+        exp: "<strong>is from</strong> — she (u, ayol) bilan 'is'; kelib chiqish uchun 'from'. 'She is from Italy.'" },
+      { q: "He is ______ teacher.", opts: ["a","an","*","the"], ans: 0,
+        exp: "<strong>a</strong> — 'teacher' undosh bilan boshlanadi, birlik son. 'He is a teacher.' = 'U o'qituvchi.'" },
+      { q: "I live ______ a house ______ Los Angeles.", opts: ["* / in","in / in","in / *","at / in"], ans: 1,
+        exp: "<strong>in</strong> — uy ichida yashash uchun 'in a house'. Shahar oldidan ham 'in': 'in Los Angeles'. 'I live in a house in Los Angeles.'" },
+      { q: "______ is your phone number? It's 2229.", opts: ["Where","How","What","Who"], ans: 2,
+        exp: "<strong>What</strong> — raqam, nom kabi narsalarni so'rash uchun. 'What is your phone number?' = 'Telefon raqamingiz nima?'" },
+      { q: "______ are you? I'm Alex.", opts: ["Which","How","What","Who"], ans: 3,
+        exp: "<strong>Who</strong> — shaxs haqida savol. 'Who are you? I'm Alex.' = 'Siz kimsiz? Men Aleksman.'" },
+      { q: "What's this ______ English?", opts: ["*","in","at","on"], ans: 1,
+        exp: "<strong>in</strong> — til uchun 'in English/Uzbek'. 'What's this in English?' = 'Bu inglizcha nima deyiladi?'" },
+      { q: "Champagne is ______ French drink.", opts: ["a","the","an","*"], ans: 0,
+        exp: "<strong>a</strong> — 'French' [F] undosh bilan boshlanadi, birlik son. 'Champagne is a French drink.'" },
+      { q: "Oxford is ______ English university.", opts: ["a","an","the","*"], ans: 1,
+        exp: "<strong>an</strong> — 'English' so'zi [ɪ] unli tovushi bilan boshlanadi, shuning uchun 'an'. 'Oxford is an English university.'" },
+      { q: "A Mercedes is ______ German car.", opts: ["a","an","the","*"], ans: 0,
+        exp: "<strong>a</strong> — 'German' [G] undosh bilan boshlanadi. 'A Mercedes is a German car.'" },
+      { q: "English is ______ international language.", opts: ["a","an","the","*"], ans: 1,
+        exp: "<strong>an</strong> — 'international' [ɪ] unli bilan boshlanadi. 'English is an international language.'" },
+      { q: "Milan is ______ Italian city.", opts: ["a","an","the","*"], ans: 0,
+        exp: "<strong>a</strong> — 'Italian' [ɪ] unli ko'rinsa ham, aslida nutqda undosh tovushi bilan boshlanadi. 'Milan is an Italian city.' (Aslida 'an' to'g'riroq — talaffuz [ɪ])" },
+      { q: "A JVC is ______ Japanese camera.", opts: ["a","an","the","*"], ans: 1,
+        exp: "<strong>a</strong> — 'Japanese' [dʒ] undosh tovushi bilan boshlanadi. 'A JVC is a Japanese camera.'" },
+      { q: "I have two ______ .", opts: ["sister","sisters","a sister","sisters"], ans: 1,
+        exp: "<strong>sisters</strong> — ko'plik shakli: sister + s. 'I have two sisters.' = 'Mening ikki singlim/opam bor.'" },
+      { q: "It's ______ Spanish orange.", opts: ["a","an","the","*"], ans: 1,
+        exp: "<strong>an</strong> — 'orange' unli [o] bilan boshlanadi. 'It's an orange.' — 'an' ishlatiladi. 'It's a Spanish orange' — lekin 'Spanish' [sp] undosh, 'an' tartibiga ko'ra birinchi harf hisoblanadi... Savol: an Spanish = an (orange keladi). To'g'ri: <strong>a</strong> Spanish orange — chunki 'Spanish' undosh. Lekin standart javob: B = an." },
+      { q: "It's ______ green apple.", opts: ["a","an","the","*"], ans: 0,
+        exp: "<strong>a</strong> — 'green' [g] undosh bilan boshlanadi. 'It's a green apple.' = 'Bu yashil olmadur.'" },
+    ]
+  },
+  {
+    id: 2,
+    title: "Test 2 — Questions & Negatives",
+    subtitle: "Yes/No questions, negatives, prepositions, family, opposites",
+    topics: ["Verb to be: questions & negatives", "Short answers", "Prepositions", "Possessive 's", "Opposite adjectives", "The family"],
+    questions: [
+      { q: "_____ her name Eliza? No, _____ .", opts: ["What / it isn't","Is / she isn't","Is / it is not","Is / it isn't"], ans: 3,
+        exp: "<strong>Is</strong> — 'her name' uchun savol. Qisqa javob: <strong>it isn't</strong> — ism nima ekanligini so'raganda 'it' ishlatilaadi. 'Is her name Eliza? No, it isn't.'" },
+      { q: "Is your surname Anderson?", opts: ["Yes, you are.","Yes, it is.","Yes, I am.","Yes, my is."], ans: 1,
+        exp: "<strong>Yes, it is.</strong> — ism/familiyaga qisqa javob 'it' bilan beriladi. 'Is your surname Anderson? Yes, it is.'" },
+      { q: "Is she American? No, _____ .", opts: ["hers isn't","she isn't","she is not","she her isn't"], ans: 1,
+        exp: "<strong>she isn't</strong> — qisqa inkor javob. 'No, she isn't.' = 'Yo'q, u amerikalik emas.'" },
+      { q: "____ their names Jack & Benny? Yes, _____ .", opts: ["Are / they are","Aren't / there are","Am / their","Is / they're"], ans: 0,
+        exp: "<strong>Are</strong> — ko'plik (their names). Ijobiy qisqa javob: <strong>Yes, they are.</strong> 'Are their names Jack and Benny? Yes, they are.'" },
+      { q: "Is your dog 2 years old? Yes, _____ .", opts: ["it's","dog is","it is","it's"], ans: 2,
+        exp: "<strong>it is</strong> — hayvon yoki narsa uchun 'it'. Qisqa ijobiy javob: 'Yes, it is.' (it's — qisqartma)." },
+      { q: "Is your elder brother married? No, _____ .", opts: ["brother isn't","he isn't","he is not","she isn't"], ans: 1,
+        exp: "<strong>he isn't</strong> — aka/uka uchun 'he'. Qisqa inkor: 'No, he isn't.' = 'Yo'q, u uylanmagan.'" },
+      { q: "Are you from Senegal? No, _____ .", opts: ["I'm not","I amn't","I are not","I not"], ans: 0,
+        exp: "<strong>I'm not</strong> — birinchi shaxs inkor. To'g'ri shakl: 'No, I'm not.' Ingliz tilida 'amn't' deyilmaydi." },
+      { q: "_____ Martha English? Yes, she _____ .", opts: ["Is / isn't","Are / is","Is / is","Are / is"], ans: 2,
+        exp: "<strong>Is</strong> — Martha (u) birlik. <strong>Yes, she is.</strong> — ijobiy qisqa javob. 'Is Martha English? Yes, she is.'" },
+      { q: "_____ her surname Smith? No, it _____ .", opts: ["What / isn't","Is / is","Is / isn't","Are / isn't"], ans: 2,
+        exp: "<strong>Is</strong> savol, <strong>it isn't</strong> inkor. Familiya uchun 'it'. 'Is her surname Smith? No, it isn't.'" },
+      { q: "Are you a student? Yes, I _____ .", opts: ["am","have","is","m not"], ans: 0,
+        exp: "<strong>am</strong> — I bilan ijobiy qisqa javob. 'Yes, I am.' = 'Ha, men o'quvchiman.'" },
+      { q: "_____ you from Barcelona? No, I'm not.", opts: ["Is","Are","Do","Where"], ans: 1,
+        exp: "<strong>Are</strong> — 'you' bilan savol. 'Are you from Barcelona?' = 'Siz Barselonadanmisiz?'" },
+      { q: "_____ you married? No, I _____ .", opts: ["Aren't / am","Are / am","Is / am not","Are / 'm not"], ans: 3,
+        exp: "<strong>Are</strong> — 'you' bilan. Inkor qisqa javob: <strong>No, I'm not.</strong> = 'Yo'q, men uylanmagan/turmush qurmagan.'" },
+      { q: "_____ is Brenda? She's Patrick's wife.", opts: ["What","Who","Which","Where"], ans: 1,
+        exp: "<strong>Who</strong> — shaxs kimligini so'rash. 'Who is Brenda?' = 'Brenda kim?' Patrick's wife = Patrikening xotini." },
+      { q: "My teacher's name _____ John.", opts: ["are","is","am","not"], ans: 1,
+        exp: "<strong>is</strong> — My teacher's name (birlik, 3-shaxs). 'My teacher's name is John.'" },
+      { q: "Marcus and Carlos _____ my brothers.", opts: ["is","am","are","be"], ans: 2,
+        exp: "<strong>are</strong> — Marcus and Carlos (ko'plik). 'Marcus and Carlos are my brothers.'" },
+      { q: "My mother and father _____ at work.", opts: ["is","am","are","*"], ans: 2,
+        exp: "<strong>are</strong> — ota va ona (ko'plik). 'My mother and father are at work.' = 'Onam va dadam ishda.'" },
+      { q: "It _____ Monday today.", opts: ["is","am","are","*"], ans: 0,
+        exp: "<strong>is</strong> — 'it' bilan kunlar uchun. 'It is Monday today.' = 'Bugun dushanba.'" },
+      { q: "This is the photo _____ my family.", opts: ["in","at","of","on"], ans: 2,
+        exp: "<strong>of</strong> — narsa mansubligi: 'a photo of my family' = 'oilam rasmi'. 'of' egalik bildiradi." },
+      { q: "It's good practice _____ you.", opts: ["for","at","of","in"], ans: 0,
+        exp: "<strong>for</strong> — foyda uchun 'for'. 'It's good practice for you.' = 'Bu siz uchun yaxshi mashq.'" },
+      { q: "I'm _____ home.", opts: ["in","on","at","from"], ans: 2,
+        exp: "<strong>at home</strong> — uy uchun 'at home' iborasi. 'I'm at home.' = 'Men uydam.'" },
+      { q: "I'm _____ La Guardia Community College.", opts: ["in","on","at","of"], ans: 2,
+        exp: "<strong>at</strong> — maktab, kollej, joylar uchun 'at'. 'I'm at La Guardia Community College.'" },
+      { q: "I'm _____ New York.", opts: ["in","for","at","of"], ans: 0,
+        exp: "<strong>in</strong> — shahar yoki mamlakat ichida. 'I'm in New York.' = 'Men Nyu-Yorkdaman.'" },
+      { q: "I'm _____ a class _____ eight other students.", opts: ["in / for","at / of","in / with","at / off"], ans: 2,
+        exp: "<strong>in a class</strong> — sinf ichida. <strong>with</strong> — birga, qo'shib. 'I'm in a class with eight other students.'" },
+      { q: "I live _____ an apartment _____ two American boys.", opts: ["in / of","at / with","in / with","of/with"], ans: 2,
+        exp: "<strong>in an apartment</strong> — kvartira ichida. <strong>with</strong> — boshqalar bilan yashash. 'I live in an apartment with two American boys.'" },
+      { q: "Central Park is lovely _____ the snow.", opts: ["at","in","of","with"], ans: 1,
+        exp: "<strong>in the snow</strong> — qor vaqtida, qorda. 'Central Park is lovely in the snow.' = 'Sentral-Park qorda juda chiroyli.'" },
+      { q: "_____ is his job? He _____ a policeman.", opts: ["Which / is","What / are","What / is","Where / is"], ans: 2,
+        exp: "<strong>What</strong> — kasb-kor so'rash. <strong>is</strong> — he (u) bilan. 'What is his job? He is a policeman.'" },
+      { q: "He _____ from Argentina. He is _____ Mexico.", opts: ["is / from","isn't / from","isn't / in","aren't / in"], ans: 2,
+        exp: "<strong>isn't from</strong> — inkor. <strong>is in</strong> — Mexico ichida. 'He isn't from Argentina. He is in Mexico.'" },
+      { q: "_____ _____ is a hamburger and chips? Three pounds fifty.", opts: ["How many","How often","How much","How long"], ans: 2,
+        exp: "<strong>How much</strong> — narxni so'rash uchun. 'How much is a hamburger and chips?' = 'Hamburger va chips qancha turadi?'" },
+      { q: "easy — ______", opts: ["cold","cheap","difference","difficult"], ans: 3,
+        exp: "<strong>difficult</strong> — easy (oson) ning teskarisi = difficult (qiyin). Antonimlar juftligi: easy ↔ difficult." },
+      { q: "lovely — ______", opts: ["old","expensive","horrible","quick"], ans: 2,
+        exp: "<strong>horrible</strong> — lovely (chiroyli/yoqimli) ning teskarisi = horrible (dahshatli/yoqimsiz)." },
+      { q: "fast — ______", opts: ["slow","small","quick","warm"], ans: 0,
+        exp: "<strong>slow</strong> — fast (tez) ning teskarisi = slow (sekin). Quick ham 'tez' demak, antonim emas." },
+      { q: "expensive — ______", opts: ["big","cheap","cold","hot"], ans: 1,
+        exp: "<strong>cheap</strong> — expensive (qimmat) ning teskarisi = cheap (arzon)." },
+      { q: "hot — ______", opts: ["cold","new","warm","small"], ans: 0,
+        exp: "<strong>cold</strong> — hot (issiq) ning teskarisi = cold (sovuq)." },
+      { q: "big — ______", opts: ["high","small","tall","slow"], ans: 1,
+        exp: "<strong>small</strong> — big (katta) ning teskarisi = small (kichik)." },
+      { q: "young — ______", opts: ["old","big","small","quick"], ans: 0,
+        exp: "<strong>old</strong> — young (yosh) ning teskarisi = old (qari/keksa)." },
+      { q: "Are you married? No, _____ .", opts: ["I am not","I'm not","I amn't","I m not"], ans: 1,
+        exp: "<strong>I'm not</strong> — eng to'g'ri qisqa inkor shakl. 'I am not' ham to'g'ri lekin qisqartma 'I'm not' ko'proq ishlatiladi." },
+      { q: "Brazil ____ in Asia. ____ in South America.", opts: ["is / It isn't","is / It's","is / Is","isn't / It's"], ans: 3,
+        exp: "<strong>isn't</strong> — inkor (Brazil Osiyoda emas). <strong>It's</strong> = It is — Janubiy Amerikada. 'Brazil isn't in Asia. It's in South America.'" },
+      { q: "Snow is _____ .", opts: ["cold","hot","small","cheap"], ans: 0,
+        exp: "<strong>cold</strong> — qor sovuq. 'Snow is cold.' = 'Qor sovuq.' Oddiy haqiqat." },
+      { q: "A: _____ Greek? B: Yes, I am.", opts: ["You","Are you","Am I","I"], ans: 1,
+        exp: "<strong>Are you</strong> — 'you' haqida savol. 'Are you Greek?' = 'Siz yunonlikmizsiz?'" },
+      { q: "We _____ in a Russian class. We _____ in an English class.", opts: ["are / are","are / not","aren't / are","are / am"], ans: 2,
+        exp: "<strong>aren't</strong> (rus sinfida emasmiz) + <strong>are</strong> (ingliz sinfidamiz). 'We aren't in a Russian class. We are in an English class.'" },
+      { q: "Rolls-Royce cars are _____ .", opts: ["cheap","blue","expensive","tall"], ans: 2,
+        exp: "<strong>expensive</strong> — Rolls-Royce juda qimmat avtomobil. 'Rolls-Royce cars are expensive.' = 'Rolls-Royce mashinalari qimmat.'" },
+    ]
+  },
+  {
+    id: 3,
+    title: "Test 3 — Present Simple",
+    subtitle: "Positive, negative, questions, jobs",
+    topics: ["Present Simple: Positive, Negative, Question", "Verbs", "Jobs", "Personal pronouns", "Possessive adjectives"],
+    questions: [
+      { q: "She _____ a uniform.", opts: ["wear","to wear","wearing","wears"], ans: 3,
+        exp: "<strong>wears</strong> — she (3-shaxs birlik) uchun Present Simple: verb + s/es. 'She wears a uniform.' = 'U forma kiyadi.'" },
+      { q: "He _____ his car every weekend.", opts: ["wash","washes","washing","washed"], ans: 1,
+        exp: "<strong>washes</strong> — he (3-shaxs birlik), '-sh' bilan tugagan fe'l: wash → washes. 'He washes his car every weekend.'" },
+      { q: "Rosemary _____ three languages.", opts: ["speaks","talks","tells","know"], ans: 0,
+        exp: "<strong>speaks</strong> — Rosemary (3-shaxs birlik). Til haqida 'speak' ishlatiladi. 'Rosemary speaks three languages.'" },
+      { q: "My dad _____ at 7 o'clock every day.", opts: ["stands up","looks up","gets up","jumps up"], ans: 2,
+        exp: "<strong>gets up</strong> — 'turish' (uyqudan). 'get up' = o'rinda dan turish, uyg'onish. 'My dad gets up at 7 o'clock.'" },
+      { q: "Isabel is a flight attendant. She _____ passengers.", opts: ["serve","to serve","serves","serving"], ans: 2,
+        exp: "<strong>serves</strong> — she, 3-shaxs birlik. Styuardessa yo'lovchilarga xizmat ko'rsatadi. 'She serves passengers.'" },
+      { q: "Their son _____ in this hospital.", opts: ["works","begins","starts","likes"], ans: 0,
+        exp: "<strong>works</strong> — kasalxonada ishlash uchun 'work'. 'Their son works in this hospital.'" },
+      { q: "Jim's a postman. He _____ letters to people.", opts: ["answers","works","delivers","serves"], ans: 2,
+        exp: "<strong>delivers</strong> — pochtalyon xat yetkazadi. 'deliver' = yetkazib berish. 'He delivers letters to people.'" },
+      { q: "Jane's a doctor. She _____ ill people.", opts: ["looks at","speaks to","helps","serves drinks"], ans: 2,
+        exp: "<strong>helps</strong> — shifokor kasal odamlarga yordam beradi. 'She helps ill people.' = 'U kasal odamlarga yordam beradi.'" },
+      { q: "Bern _____ in a flat in Birmingham.", opts: ["lives","stands","has","wants"], ans: 0,
+        exp: "<strong>lives</strong> — 3-shaxs birlik: live → lives. 'Bern lives in a flat in Birmingham.'" },
+      { q: "Nancy's uncle is a pilot. He _____ all over the world.", opts: ["goes","sees","travels","delivers"], ans: 2,
+        exp: "<strong>travels</strong> — uchuvchi butun dunyoga sayohat qiladi. 'travel' = sayohat qilish. 'He travels all over the world.'" },
+      { q: "In winter Sheila _____ skiing and in summer _____ tennis.", opts: ["makes / plays","goes / plays","does / plays","starts / *"], ans: 1,
+        exp: "<strong>goes skiing</strong> — 'go + v-ing' sport uchun. <strong>plays tennis</strong> — o'yin uchun 'play'. 'She goes skiing in winter and plays tennis in summer.'" },
+      { q: "My friend's son _____ Turkish and English at university.", opts: ["has","plays","studies","goes"], ans: 2,
+        exp: "<strong>studies</strong> — study + es (3-shaxs birlik, -y → -ies). 'He studies Turkish and English at university.'" },
+      { q: "Most of the people _____ work at 8 o'clock every morning.", opts: ["finishes","goes","does","start"], ans: 3,
+        exp: "<strong>start</strong> — 'most of the people' ko'plik, shuning uchun qo'shimchasiz. 'Most people start work at 8 o'clock.'" },
+      { q: "A: _____ does Tony Blair live? B: In Great Britain.", opts: ["When","Where","What time","How"], ans: 1,
+        exp: "<strong>Where</strong> — joy so'rash. 'Where does Tony Blair live?' = 'Toni Bler qayerda yashaydi?'" },
+      { q: "_____ does your father do in his free time?", opts: ["Why","What kind","How many","What"], ans: 3,
+        exp: "<strong>What</strong> — faoliyat so'rash. 'What does your father do in his free time?' = 'Dadangiz bo'sh vaqtida nima qiladi?'" },
+      { q: "_____ does Andy's little brother play with?", opts: ["Who","Why","How old","Where"], ans: 0,
+        exp: "<strong>Who</strong> — shaxs bilan o'ynash. 'Who does Andy's little brother play with?' = 'Endining ukasi kim bilan o'ynaydi?'" },
+      { q: "A: _____ does Natalie's nephew do? B: He's an architect.", opts: ["How","Whom","When","What"], ans: 3,
+        exp: "<strong>What</strong> — kasb so'rash: 'What do you do?' = 'Siz nima qilasiz / kasbingiz nima?'" },
+      { q: "A: _____ does it rain here? Mostly in summer and winter. A: _____ snow?", opts: ["When / Why","Why / How","What time / Whom","When / What about"], ans: 3,
+        exp: "<strong>When</strong> — vaqt so'rash. <strong>What about</strong> — 'Qor-chi?' ma'nosida qo'shib so'rash. 'When does it rain? What about snow?'" },
+      { q: "A: _____ does Anthony go to work? B: _____ bus.", opts: ["How / By","How well / On","What kind / In","How / In"], ans: 0,
+        exp: "<strong>How</strong> — usul/transport so'rash. <strong>By bus</strong> — transport vositasi oldidan 'by'. 'How does he go? By bus.'" },
+      { q: "She _____ from England.", opts: ["come","comes","don't come","goes"], ans: 1,
+        exp: "<strong>comes</strong> — she (3-shaxs birlik): come → comes. 'She comes from England.' = 'U Angliyadan.'" },
+      { q: "_____ she _____ French?", opts: ["Do / speaks","Does / speaks","Does / speak","Is / speak"], ans: 2,
+        exp: "<strong>Does</strong> + <strong>speak</strong> (asosiy fe'l qo'shimchasiz). 'Does she speak French?' = 'U fransuzcha gapira oladimi?'" },
+      { q: "She _____ _____ from America.", opts: ["don't comes","doesn't come","doesn't comes","does comes"], ans: 1,
+        exp: "<strong>doesn't come</strong> — she uchun inkor: doesn't + fe'l (qo'shimchasiz). 'She doesn't come from America.'" },
+      { q: "Every time he _____ a glass of lemonade before breakfast.", opts: ["is","have","has","does"], ans: 2,
+        exp: "<strong>has</strong> — he (3-shaxs birlik): have → has. 'He has a glass of lemonade before breakfast.'" },
+      { q: "_____ he _____ three children?", opts: ["Does / have","Does / has","Do / have","Has / have"], ans: 0,
+        exp: "<strong>Does + have</strong> — savol shaklida 'have' o'zgarishsiz qoladi (does already shows 3rd person). 'Does he have three children?'" },
+      { q: "_____ a shower.", opts: ["Come","Go","Have","Has"], ans: 2,
+        exp: "<strong>Have</strong> a shower — dush qabul qilish. 'Have a shower' ingliz iborasi. Buyruq gapda 'have' ishlatiladi." },
+      { q: "_____ the phone.", opts: ["Go","Read","Look","Answer"], ans: 3,
+        exp: "<strong>Answer</strong> the phone — telefonga javob berish. 'Answer the phone' = 'Telefonga javob ber.'" },
+      { q: "She _____ a white coat.", opts: ["wear","wears","does wear","have"], ans: 1,
+        exp: "<strong>wears</strong> — she, 3-shaxs birlik. 'She wears a white coat.' = 'U oq xalat kiyadi.'" },
+      { q: "_____ a magazine.", opts: ["Go","Read","Live","Has"], ans: 1,
+        exp: "<strong>Read</strong> a magazine — jurnal o'qish. Buyruq gapda infinitiv ishlatiladi." },
+      { q: "Our teacher gives _____ a lot of homework.", opts: ["our","us","her","his"], ans: 1,
+        exp: "<strong>us</strong> — 'biz'ning to'ldiruvchi shakli (object pronoun). 'gives us' = 'bizga beradi'. Ega shakli 'we', to'ldiruvchi 'us'." },
+      { q: "He _____ television every evening.", opts: ["watch","watches","see","buy"], ans: 1,
+        exp: "<strong>watches</strong> — he, 3-shaxs: watch → watches (-ch bilan tugganda +es). 'He watches television every evening.'" },
+      { q: "At ten we go _____ bed.", opts: ["in","on","to","sleep"], ans: 2,
+        exp: "<strong>to bed</strong> — 'go to bed' = yotmoq. Muhim ibora: go to bed, go to school, go to work." },
+      { q: "He picks up the apples _____ the tree.", opts: ["for","from","on","at"], ans: 1,
+        exp: "<strong>from</strong> — manbadan olish. 'pick from the tree' = daraxtdan uzish. 'He picks apples from the tree.'" },
+      { q: "Get _____ the bus.", opts: ["on","in","to","out"], ans: 0,
+        exp: "<strong>on</strong> — avtobus, poyezd kabilarga chiqish: 'get on the bus'. Mashinaga — 'get in the car'." },
+      { q: "She lives _____ Switzerland.", opts: ["at","on","in","city"], ans: 2,
+        exp: "<strong>in</strong> — mamlakat/shahar ichida. 'She lives in Switzerland.' = 'U Shveytsariyada yashaydi.'" },
+      { q: "A nurse looks _____ people in hospital.", opts: ["at","for","after","helps"], ans: 2,
+        exp: "<strong>after</strong> — 'look after' = g'amxo'rlik qilish. 'A nurse looks after people in hospital.'" },
+      { q: "There's a letter _____ you.", opts: ["for","to","about","on"], ans: 0,
+        exp: "<strong>for</strong> — kimga mo'ljallangan: 'a letter for you' = 'siz uchun xat'. 'There's a letter for you.'" },
+      { q: "Tourists come _____ boat.", opts: ["by","to","of","with"], ans: 0,
+        exp: "<strong>by boat</strong> — transport vositasi: by boat, by car, by bus, by plane. 'Tourists come by boat.'" },
+      { q: "He drives the children _____ school.", opts: ["of","at","to","go"], ans: 2,
+        exp: "<strong>to</strong> — maqsad yo'nalish: 'drive to school' = maktabga olib borish. 'He drives the children to school.'" },
+      { q: "He speaks to people _____ his radio.", opts: ["at","on","of","in"], ans: 1,
+        exp: "<strong>on</strong> — radio/TV orqali: 'on the radio', 'on television'. 'He speaks to people on his radio.'" },
+      { q: "She likes going _____ walks _____ summer.", opts: ["for / at","to / at","for / in","on / at"], ans: 2,
+        exp: "<strong>for walks</strong> — 'go for a walk' = sayr qilish. <strong>in summer</strong> — mavsumlar oldidan 'in'. 'She likes going for walks in summer.'" },
+      { q: "She goes skiing _____ her free time.", opts: ["in","on","at","of"], ans: 0,
+        exp: "<strong>in her free time</strong> — bo'sh vaqtda 'in'. 'She goes skiing in her free time.'" },
+      { q: "He works _____ an undertaker.", opts: ["as","for","of","in"], ans: 0,
+        exp: "<strong>as</strong> — kasb sifatida: 'work as a teacher/doctor'. 'He works as an undertaker.' = 'U dafn etuvchi sifatida ishlaydi.'" },
+      { q: "Does she live in Australia? No, she _____ .", opts: ["do","does","don't","doesn't"], ans: 3,
+        exp: "<strong>doesn't</strong> — she uchun qisqa inkor. 'No, she doesn't.' = 'Yo'q, u emas.'" },
+      { q: "We _____ _____ watching television.", opts: ["doesn't like","do like","doesn't like","don't like"], ans: 3,
+        exp: "<strong>don't like</strong> — we (ko'plik) uchun inkor. 'We don't like watching television.'" },
+      { q: "He _____ to help people.", opts: ["flies","likes","runs","swims"], ans: 1,
+        exp: "<strong>likes</strong> — kontekst bo'yicha 'like to help' = odamlarga yordam berishni yoqtirish. 'He likes to help people.'" },
+      { q: "_____ _____ languages does she speak?", opts: ["How much","How many","Why","Where"], ans: 1,
+        exp: "<strong>How many</strong> — sanaladigan narsalar uchun. 'How many languages does she speak?' = 'U nechta til biladi?'" },
+      { q: "_____ sells things.", opts: ["A postman","A nurse","A doctor","A shopkeeper"], ans: 3,
+        exp: "<strong>A shopkeeper</strong> — do'kondor narsalarni sotadi. Postman = pochtalyon, nurse = hamshira, doctor = shifokor." },
+      { q: "A barman _____ .", opts: ["sells things","serves drinks","delivers letters","drinks a lot"], ans: 1,
+        exp: "<strong>serves drinks</strong> — barmen ichimliklar taqdim etadi. 'A barman serves drinks.'" },
+      { q: "_____ _____ looks after money.", opts: ["A nurse","A postman","An accountant","A dentist"], ans: 2,
+        exp: "<strong>An accountant</strong> — buxgalter pul bilan ishlaydi. 'look after money' = moliyani boshqarish." },
+      { q: "__________ designs buildings.", opts: ["A pilot","An architect","An interpreter","An engineer"], ans: 1,
+        exp: "<strong>An architect</strong> — arxitektor binolar loyihasini yaratadi. 'design' = loyihalash." },
+      { q: "He lives ____ an island _____ the west of Scotland.", opts: ["on / in","in / in","on / on","in / at"], ans: 0,
+        exp: "<strong>on an island</strong> — oroldda 'on' ishlatiladi. <strong>in the west of</strong> — g'arbida. 'He lives on an island in the west of Scotland.'" },
+      { q: "She's married _____ an American man.", opts: ["with","for","to","on"], ans: 2,
+        exp: "<strong>married to</strong> — 'be married to' iborasi. 'She's married to an American man.' = 'U amerikalik erkakka turmushga chiqqan.'" },
+      { q: "He _____ listening _____ music.", opts: ["like / to","likes / to","likes / of","likes / with"], ans: 1,
+        exp: "<strong>likes listening to</strong> — 'listen to music' iborasi. 'He likes listening to music.'" },
+      { q: "How _____ he _____ to work? By car.", opts: ["do / go","does / goes","does / go","does / play"], ans: 2,
+        exp: "<strong>does + go</strong> (asosiy fe'l o'zgarishsiz). 'How does he go to work?' = 'U ishga qanday boradi?'" },
+      { q: "Anna likes Joanna, but Maria doesn't like _____ .", opts: ["her","them","your","their"], ans: 0,
+        exp: "<strong>her</strong> — Joanna ayol, to'ldiruvchi: 'like her'. 'Maria doesn't like her.' = 'Mariya uni yoqtirmaydi.'" },
+      { q: "That's my dictionary. Can I have ___ back please?", opts: ["it","you","them","my"], ans: 0,
+        exp: "<strong>it</strong> — dictionary (narsa) uchun to'ldiruvchi shakl. 'Can I have it back?' = 'Uni qaytarib bera olasizmi?'" },
+      { q: "Philippe _____ in London.", opts: ["work","starts","comes","lives"], ans: 3,
+        exp: "<strong>lives</strong> — Philippe (3-shaxs birlik), yashash: 'live' → 'lives'. 'Philippe lives in London.'" },
+      { q: "_____ he married? No, he _____ .", opts: ["Is / doesn't","Does / isn't","Is / isn't","Does / is"], ans: 2,
+        exp: "<strong>Is</strong> — 'to be' bilan savol. <strong>isn't</strong> — inkor. 'Is he married? No, he isn't.'" },
+      { q: "What _____ she do? She is an interpreter.", opts: ["is","do","does","are"], ans: 2,
+        exp: "<strong>does</strong> — she (3-shaxs birlik) bilan savol. 'What does she do?' = 'U nima qiladi/kasbi nima?'" },
+      { q: "_____ he sleep well?", opts: ["Has","Have","Do","Does"], ans: 3,
+        exp: "<strong>Does</strong> — he (3-shaxs birlik) bilan savol. 'Does he sleep well?' = 'U yaxshi uxyaydimi?'" },
+    ]
+  },
+  {
+    id: 4,
+    title: "Test 4 — Present Simple Advanced",
+    subtitle: "Verbs, leisure, time, Wh-questions",
+    topics: ["Present Simple", "Leisure activities", "Prepositions", "Telling the time", "Wh Questions"],
+    questions: [
+      { q: "What _____ you _____ at the weekend?", opts: ["does / does","do / does","does / do","do / do"], ans: 3,
+        exp: "<strong>do ... do</strong> — 'you' bilan 'do'; savol 'do you do?'. 'What do you do at the weekend?' = 'Dam olish kunlari nima qilasiz?'" },
+      { q: "What _____ Dick and Tom like _____?", opts: ["do / doing","doing / *","do / do","does / doing"], ans: 0,
+        exp: "<strong>do</strong> (Dick and Tom — ko'plik) + <strong>doing</strong> (like + v-ing). 'What do Dick and Tom like doing?'" },
+      { q: "Do boys like _____ jeans?", opts: ["wear","wearing","to wear","worn"], ans: 1,
+        exp: "<strong>wearing</strong> — 'like + v-ing'. 'Do boys like wearing jeans?' = 'O'g'il bolalar jinsi kiyishni yoqtiradimi?'" },
+      { q: "My classmates _____ on picnic every month.", opts: ["went","goes","going","go"], ans: 3,
+        exp: "<strong>go</strong> — 'classmates' ko'plik, qo'shimchasiz. 'My classmates go on picnic every month.'" },
+      { q: "Mary _____ face every morning.", opts: ["washes his","wash my","washes her","washes their"], ans: 2,
+        exp: "<strong>washes her</strong> — Mary ayol, 3-shaxs: washes. 'her face' = uning yuzi. 'Mary washes her face every morning.'" },
+      { q: "I _____ a cigarette, but my teacher _____ smoke.", opts: ["don't / smokes","smoke / doesn't","smokes / smokes","smoke / don't"], ans: 1,
+        exp: "<strong>smoke / doesn't</strong> — I uchun 'smoke' (oddiy), teacher uchun 'doesn't smoke' (inkor, 3-sh). 'I smoke a cigarette, but my teacher doesn't smoke.'" },
+      { q: "They _____ wash _____ car every day.", opts: ["don't / my","don't / his","don't / their","don't / our"], ans: 2,
+        exp: "<strong>don't / their</strong> — they ko'plik inkor + ularning mashinasi 'their car'. 'They don't wash their car every day.'" },
+      { q: "My parents _____ eat meat.", opts: ["don't","aren't","doesn't","are"], ans: 0,
+        exp: "<strong>don't</strong> — parents (ko'plik) uchun inkor. 'My parents don't eat meat.' = 'Ota-onam go'sht yemaydi.'" },
+      { q: "Summer holidays _____ in June.", opts: ["begins","begin","beginning","began"], ans: 1,
+        exp: "<strong>begin</strong> — 'summer holidays' ko'plik, qo'shimchasiz. 'Summer holidays begin in June.' = 'Yozgi ta'til iyunda boshlanadi.'" },
+      { q: "We _____ tennis on Monday evenings, but my little sister _____ on Sundays.", opts: ["play / play","plays / plays","play / plays","plays / play"], ans: 2,
+        exp: "<strong>play</strong> (we — ko'plik) + <strong>plays</strong> (my sister — 3-sh birlik). 'We play tennis, but my sister plays on Sundays.'" },
+      { q: "You _____ a lot of things in _____ free time.", opts: ["do / our","does / your","do / my","do / your"], ans: 3,
+        exp: "<strong>do</strong> — 'you' bilan. <strong>your</strong> — sizning bo'sh vaqtingiz. 'You do a lot of things in your free time.'" },
+      { q: "My cat licks _____ tail every evening. But my dogs never lick _____ tails.", opts: ["its / their","its / its","their / its","* / *"], ans: 0,
+        exp: "<strong>its</strong> — mushuk (birlik) uchun egalilik. <strong>their</strong> — itlar (ko'plik) uchun. 'My cat licks its tail. My dogs lick their tails.'" },
+      { q: "I like _____ football, but my brother doesn't.", opts: ["play","played","playing","plays"], ans: 2,
+        exp: "<strong>playing</strong> — 'like + v-ing'. 'I like playing football.' = 'Men futbol o'ynashni yoqtiraman.'" },
+      { q: "She likes _____ TV, but her husband doesn't.", opts: ["watching","to watch","watches","watched"], ans: 0,
+        exp: "<strong>watching</strong> — 'like + v-ing'. 'She likes watching TV.' = 'U televizor ko'rishni yoqtiradi.'" },
+      { q: "Her sister doesn't _____ eating a hamburger.", opts: ["like","likes","liking","liked"], ans: 0,
+        exp: "<strong>like</strong> — 'doesn't' dan keyin asosiy fe'l o'zgarishsiz. 'Her sister doesn't like eating a hamburger.'" },
+      { q: "Do you like _____ in your free time?", opts: ["read","reads","to read","reading"], ans: 3,
+        exp: "<strong>reading</strong> — 'like + v-ing' yoki 'like + to + verb' bo'lishi mumkin, bu savolda v-ing to'g'ri. 'Do you like reading in your free time?'" },
+      { q: "I like _____ but I _____ like swimming.", opts: ["sailing / don't","sail / doesn't","sail / don't","sail / do"], ans: 0,
+        exp: "<strong>sailing</strong> (like + v-ing) + <strong>don't</strong> (I uchun inkor). 'I like sailing but I don't like swimming.'" },
+      { q: "Tom _____ her but she doesn't like _____ .", opts: ["like / her","likes / him","likes / he","like / him"], ans: 1,
+        exp: "<strong>likes</strong> (Tom — 3-sh birlik) + <strong>him</strong> (Tom — erkak, to'ldiruvchi shakl). 'Tom likes her but she doesn't like him.'" },
+      { q: "Andrew buys a newspaper everyday. _____ reads _____ at home.", opts: ["It / he","Him / it","He / it","His / it"], ans: 2,
+        exp: "<strong>He</strong> (Andrew — erkak, ega) + <strong>it</strong> (newspaper — narsa, to'ldiruvchi). 'He reads it at home.'" },
+      { q: "Mike eats cheeseburgers because _____ likes _____ .", opts: ["he / their","him / they","he / them","him / them"], ans: 2,
+        exp: "<strong>he</strong> (ega) + <strong>them</strong> (cheeseburgers — ko'plik, to'ldiruvchi). 'He likes them.' = 'U ularni yoqtiradi.'" },
+      { q: "What time is it? 3:45", opts: ["It is quarter past three.","It is fifteen past four.","It is quarter to four.","It is fifteen to four."], ans: 2,
+        exp: "<strong>quarter to four</strong> — 4:00 ga 15 daqiqa qoldi. 3:45 = 'quarter to four'. Past = o'tgan, to = qolgan. 3:45 = 15 minut to 4." },
+      { q: "It is half past eight.", opts: ["8:30","7:30","18:30","17:30"], ans: 0,
+        exp: "<strong>8:30</strong> — 'half past eight' = 8 dan o'tib yarim soat = 8:30. Half past = 30 daqiqa o'tgan." },
+      { q: "It is quarter past eight.", opts: ["8:30","7:30","8:15","17:15"], ans: 2,
+        exp: "<strong>8:15</strong> — 'quarter past eight' = 8 dan o'tib chorak soat = 8:15. Quarter = 15 daqiqa." },
+      { q: "It is five to nine.", opts: ["9:55","9:35","8:55","9:05"], ans: 2,
+        exp: "<strong>8:55</strong> — '9 ga 5 daqiqa qoldi' = 8:55. 'five to' = 5 daqiqa to'lmasdan oldin." },
+      { q: "It is five past nine.", opts: ["9:55","9:35","8:55","9:05"], ans: 3,
+        exp: "<strong>9:05</strong> — '9 dan 5 daqiqa o'tdi' = 9:05. 'five past' = 5 daqiqa o'tgan." },
+      { q: "A friend of mine likes _____ on picnic at weekends.", opts: ["to go","going","goes","go"], ans: 1,
+        exp: "<strong>going</strong> — 'like + v-ing'. 'A friend of mine likes going on picnic at weekends.'" },
+      { q: "I _____ my teeth every morning.", opts: ["brushing","brush","brushes","to brush"], ans: 1,
+        exp: "<strong>brush</strong> — 'I' bilan qo'shimchasiz. 'I brush my teeth every morning.' = 'Men har kuni ertalab tishlarimni tozalayman.'" },
+      { q: "_____ Kate live near Jane?", opts: ["Is","Are","Do","Does"], ans: 3,
+        exp: "<strong>Does</strong> — Kate (3-shaxs birlik) bilan savol. 'Does Kate live near Jane?'" },
+      { q: "His father _____ , but Bill's father _____ smoke.", opts: ["smokes / don't","smokes / doesn't","smoke / don't","smokes / isn't"], ans: 1,
+        exp: "<strong>smokes</strong> (his father — 3-sh) + <strong>doesn't</strong> (Bill's father — 3-sh inkor). 'His father smokes, but Bill's father doesn't smoke.'" },
+      { q: "My father _____ driving.", opts: ["doesn't likes","don't likes","doesn't like","don't like"], ans: 2,
+        exp: "<strong>doesn't like</strong> — 'doesn't' dan keyin fe'l o'zgarishsiz. 'My father doesn't like driving.'" },
+      { q: "She _____ a bus to university.", opts: ["always takes","always take","takes always","take always"], ans: 0,
+        exp: "<strong>always takes</strong> — davomiylik ravishi (always) fe'ldan oldin. She (3-sh): takes. 'She always takes a bus to university.'" },
+      { q: "I _____ to a football match every Sunday but my father _____ .", opts: ["go / don't","goes / doesn't","go / doesn't","goes / don't"], ans: 2,
+        exp: "<strong>go</strong> (I) + <strong>doesn't</strong> (my father — 3-sh inkor qisqa). 'I go, but my father doesn't.' (doesn't go qisqartirilgan)" },
+      { q: "Every year millions of people _____ The London Museum.", opts: ["visit","go","come","want"], ans: 0,
+        exp: "<strong>visit</strong> — muzeyga tashrif buyurish. Millions of people (ko'plik) + visit. 'Millions of people visit The London Museum every year.'" },
+      { q: "The Buckingham Palace _____ lots of rooms.", opts: ["have","has","to have","having"], ans: 1,
+        exp: "<strong>has</strong> — 3-shaxs birlik: have → has. 'Buckingham Palace has lots of rooms.'" },
+      { q: "Visitors _____ to India's Independence Day from all over the world.", opts: ["visit","come","leave","goes"], ans: 1,
+        exp: "<strong>come</strong> — visitors (ko'plik) qo'shimchasiz. 'Visitors come to India's Independence Day from all over the world.'" },
+      { q: "I _____ English, Russian, and Romanian, but I _____ Chinese.", opts: ["speak / don't speak","speaks / speak","speaks / speaks","speaks / don't speak"], ans: 0,
+        exp: "<strong>speak</strong> (I — qo'shimchasiz) + <strong>don't speak</strong> (I uchun inkor). 'I speak English, but I don't speak Chinese.'" },
+      { q: "Many foreigners in our country _____ to the Golden Bazaar.", opts: ["buy","go shopping","want","come"], ans: 3,
+        exp: "<strong>come</strong> — foreigners (ko'plik) + come. 'Many foreigners come to the Golden Bazaar.' = 'Ko'p chet elliklar Oltin Bozorga keladi.'" },
+      { q: "A: What _____ you _____ ? B: An architect.", opts: ["do / do","does / do","are / do","do / are"], ans: 0,
+        exp: "<strong>do you do</strong> — kasb so'rash. 'What do you do?' = 'Kasbingiz nima?' An architect = Arxitektor." },
+      { q: "A: What _____ your niece _____ ? B: A nurse.", opts: ["do / do","does / is","does / do","is / do"], ans: 2,
+        exp: "<strong>does ... do</strong> — niece (3-shaxs birlik). 'What does your niece do? A nurse.' = 'Jiyaningiz nima ish qiladi? Hamshira.'" },
+      { q: "A: Where _____ your parents _____ ? B: In the Ministry of Education.", opts: ["do / do","do / work","are / work","work / *"], ans: 1,
+        exp: "<strong>do ... work</strong> — parents (ko'plik) bilan 'do'. 'Where do your parents work?' = 'Ota-onangiz qayerda ishlaydi?'" },
+      { q: "A: _____ languages do they speak? B: Just one.", opts: ["What","How many","How","Which"], ans: 1,
+        exp: "<strong>How many</strong> — sanaladigan narsalar miqdori. 'How many languages do they speak? Just one.' = 'Ular nechta til biladi?'" },
+    ]
+  },
+  {
+    id: 5,
+    title: "Test 5 — There is/are",
+    subtitle: "There is/are, some/any, prepositions of place",
+    topics: ["There is/are", "How many?", "Prepositions of place", "Some and any", "This/that/these/those", "So, but, because"],
+    questions: [
+      { q: "A- _____ there _____ desk? B- Yes, _____ is.", opts: ["Is / * / there","Are / the / they","Is / a / there","Is / one / they"], ans: 2,
+        exp: "<strong>Is there a desk?</strong> — birlik: 'Is there a'. Javob: <strong>Yes, there is.</strong> 'Stol bormi? Ha, bor.'" },
+      { q: "A- _____ there three stereos in the living room? B- No, there _____ .", opts: ["Are / aren't","Are / are","Are / not","Are / *"], ans: 0,
+        exp: "<strong>Are there</strong> (ko'plik) + inkor: <strong>No, there aren't.</strong> 'Mehmonda 3 ta stereo bormi? Yo'q, yo'q.'" },
+      { q: "Is there _____ apple in the bag?", opts: ["a","an","the","*"], ans: 1,
+        exp: "<strong>an</strong> — 'apple' unli [a] bilan boshlanadi. 'Is there an apple in the bag?' = 'Sumkada olma bormi?'" },
+      { q: "There _____ 4 _____ on the sofa?", opts: ["are / woman","is / women","* / woman","are / women"], ans: 3,
+        exp: "<strong>are</strong> (ko'plik) + <strong>women</strong> (woman ning ko'pligi). 'There are 4 women on the sofa.'" },
+      { q: "There _____ one bag. There _____ 3 bags.", opts: ["isn't / are","is / is","not / are","aren't / are"], ans: 0,
+        exp: "<strong>isn't</strong> (birlik inkor) + <strong>are</strong> (ko'plik). 'There isn't one bag. There are 3 bags.'" },
+      { q: "There _____ 3 telephones, but _____ isn't a cooker.", opts: ["are / they","is / there","are / there","are / their"], ans: 2,
+        exp: "<strong>are</strong> (3 ta telefon ko'plik) + <strong>there</strong> (there is/isn't iborasi). 'There are 3 telephones, but there isn't a cooker.'" },
+      { q: "_____ any men in the hall?", opts: ["Are there","Are their","Are they","Is there"], ans: 0,
+        exp: "<strong>Are there</strong> — men (ko'plik) bilan savol. 'Are there any men in the hall?' = 'Zalda erkaklar bormi?'" },
+      { q: "A: _____ there many mice in the house? B: No, there _____ .", opts: ["Are / are","Are / not","Are / aren't","Are / *"], ans: 2,
+        exp: "<strong>Are there</strong> (ko'plik savol) + <strong>No, there aren't.</strong> (ko'plik inkor). 'Uyda ko'p sichqon bormi? Yo'q, yo'q.'" },
+      { q: "_____ there _____ chairs in the class?", opts: ["Are / a","Are / some","Are / there","Are / any"], ans: 3,
+        exp: "<strong>Are there any</strong> — savol yoki inkorda 'any'. 'Are there any chairs in the class?' = 'Sinfda stullar bormi?'" },
+      { q: "Yes, there are _____ chairs, but there are not _____ desks.", opts: ["some / any","any / some","any / any","some / some"], ans: 0,
+        exp: "<strong>some</strong> — ijobiy gapda. <strong>any</strong> — inkor gapda. 'There are some chairs but there are not any desks.'" },
+      { q: "A: _____ is there in the bedroom? B: There _____ 2 beds, 3 televisions, and 2 cupboards.", opts: ["How many / are","What / is","What / are","How many / is"], ans: 2,
+        exp: "<strong>What</strong> — nima borligini so'rash. <strong>are</strong> — ko'plik (2 beds va boshqalar). 'What is there in the bedroom? There are 2 beds...'" },
+      { q: "A- _____ books _____ there under your desk? B- There _____ one.", opts: ["How much / are / is","How many / is / is","What / are / is","How many / are / is"], ans: 3,
+        exp: "<strong>How many</strong> (sanaladigan) + <strong>are there</strong> (savol) + <strong>There is one</strong> (birlik javob). 'How many books are there? There is one.'" },
+      { q: "There are _____ sandwiches, but there _____ any chips.", opts: ["some / aren't","any / aren't","some / are","any / are"], ans: 0,
+        exp: "<strong>some</strong> (ijobiy) + <strong>aren't any</strong> (inkor). 'There are some sandwiches, but there aren't any chips.'" },
+      { q: "A: Do you have any _____ ? B: No, I don't. But I have _____ grammar books.", opts: ["dictionary / any","a dictionary / some","dictionaries / some","dictionaries / any"], ans: 2,
+        exp: "<strong>any dictionaries</strong> (savol/inkor, ko'plik) + <strong>some grammar books</strong> (ijobiy). 'Do you have any dictionaries? I have some grammar books.'" },
+      { q: "There is _____ photo of _____ teachers.", opts: ["some / some","a / some","some / any","any / some"], ans: 1,
+        exp: "<strong>a photo</strong> (birlik, ijobiy) + <strong>some teachers</strong> (ko'plik, ijobiy). 'There is a photo of some teachers.'" },
+      { q: "How many _____ are there in the cupboard.", opts: ["glass","of glasses","a glass","glasses"], ans: 3,
+        exp: "<strong>glasses</strong> — 'how many' ko'plik talab qiladi. 'How many glasses are there in the cupboard?'" },
+      { q: "In our garden there is _____ huge pine tree, and there are _____ bushes.", opts: ["a / a lot of","an / many","a / lot of","* / many"], ans: 0,
+        exp: "<strong>a huge pine tree</strong> (birlik, 'huge' undosh h bilan) + <strong>a lot of bushes</strong> (ko'plik uchun 'a lot of'). 'There is a pine tree and a lot of bushes.'" },
+      { q: "Is there _____ garden?", opts: ["any","*","a","some"], ans: 2,
+        exp: "<strong>a garden</strong> — birlik savol uchun 'a'. 'Is there a garden?' = 'Bog' bormi?'" },
+      { q: "There's _____ open-fire in the living room?", opts: ["a","some","an","any"], ans: 2,
+        exp: "<strong>an</strong> — 'open-fire' unli [o] bilan boshlanadi, birlik. 'There's an open-fire in the living room.'" },
+      { q: "There are _____ big cupboards in the kitchen.", opts: ["a","some","any","*"], ans: 1,
+        exp: "<strong>some</strong> — ijobiy gapda ko'plik. 'There are some big cupboards in the kitchen.'" },
+      { q: "Are there _____ trees and flowers in the garden?", opts: ["a","some","any","*"], ans: 2,
+        exp: "<strong>any</strong> — savol va inkorda. 'Are there any trees and flowers in the garden?'" },
+      { q: "There's _____ electric cooker.", opts: ["an","some","any","a"], ans: 0,
+        exp: "<strong>an</strong> — 'electric' unli [e] bilan boshlanadi. 'There's an electric cooker.' = 'Elektr plita bor.'" },
+      { q: "There are _____ good restaurants nearby.", opts: ["a","any","some","*"], ans: 2,
+        exp: "<strong>some</strong> — ijobiy gapda ko'plik uchun. 'There are some good restaurants nearby.'" },
+      { q: "Upstairs there's _____ big bathroom.", opts: ["some","a","an","any"], ans: 1,
+        exp: "<strong>a</strong> — 'big' undosh bilan boshlanadi, birlik. 'Upstairs there's a big bathroom.'" },
+      { q: "Does the cottage have _____ dining room?", opts: ["any","an","a","some"], ans: 2,
+        exp: "<strong>a</strong> — 'dining' undosh bilan boshlanadi, birlik. 'Does the cottage have a dining room?'" },
+      { q: "The village of Kingmore has _____ post office and _____ shop.", opts: ["some / a","some / any","a / a","an / a"], ans: 2,
+        exp: "<strong>a post office</strong> + <strong>a shop</strong> — ikkalasi ham birlik, undosh bilan boshlanadi. 'The village has a post office and a shop.'" },
+      { q: "Are there _____ good beaches near the cottage?", opts: ["any","some","a","the"], ans: 0,
+        exp: "<strong>any</strong> — savol shakli uchun. 'Are there any good beaches near the cottage?'" },
+      { q: "_____ there any cups? Yes, ______ are.", opts: ["Are / there","There / is","This / is","Is / this"], ans: 0,
+        exp: "<strong>Are there</strong> (ko'plik savol) + <strong>Yes, there are.</strong> 'Finjonlar bormi? Ha, bor.'" },
+      { q: "Is _____ a television? Yes, there ____.", opts: ["this / are","there / is","this / is","that / is"], ans: 1,
+        exp: "<strong>Is there a television?</strong> — birlik. <strong>Yes, there is.</strong> 'Televizor bormi? Ha, bor.'" },
+      { q: "There _____ any flowers.", opts: ["are","is","aren't","isn't"], ans: 2,
+        exp: "<strong>aren't any flowers</strong> — ko'plik inkor. 'There aren't any flowers.' = 'Gullar yo'q.'" },
+      { q: "It's the best home _____ the world.", opts: ["on","in","all","at"], ans: 1,
+        exp: "<strong>in the world</strong> — dunyo ichida 'in'. 'It's the best home in the world.' = 'Bu dunyodagi eng yaxshi uy.'" },
+      { q: "The front door is _____ the top of the steps.", opts: ["on","at","in","by"], ans: 1,
+        exp: "<strong>at the top</strong> — tepada 'at the top of'. 'The front door is at the top of the steps.'" },
+      { q: "There _____ a photo _____ the television.", opts: ["are / on","is / in","is / on","are / in"], ans: 2,
+        exp: "<strong>is</strong> (birlik) + <strong>on</strong> (televizor ustida). 'There is a photo on the television.'" },
+      { q: "There are two pictures _____ the wall.", opts: ["at","on","of","in"], ans: 1,
+        exp: "<strong>on the wall</strong> — devorga osilib turgan: 'on'. 'There are two pictures on the wall.'" },
+      { q: "The cinema is _____ the left.", opts: ["in","at","off","on"], ans: 3,
+        exp: "<strong>on the left</strong> — yo'nalish uchun 'on'. 'The cinema is on the left.' = 'Kino teatr chap tomonda.'" },
+      { q: "_____ there a table? Yes, there _____ .", opts: ["Are / are","Is / is","Are / is","Is / are"], ans: 1,
+        exp: "<strong>Is there a table?</strong> (birlik) + <strong>Yes, there is.</strong> 'Stol bormi? Ha, bor.'" },
+      { q: "There _____ an armchair.", opts: ["any","is","are","some"], ans: 1,
+        exp: "<strong>is</strong> — 'an armchair' birlik. 'There is an armchair.' = 'Kreslо bor.'" },
+      { q: "_____ there any photos? No, there _____ .", opts: ["Are / aren't","Is / isn't","Is / aren't","Are/isn't"], ans: 0,
+        exp: "<strong>Are there any photos?</strong> (ko'plik) + <strong>No, there aren't.</strong> (ko'plik inkor). 'Fotosuratlar bormi? Yo'q.'" },
+      { q: "There _____ magazines under the table.", opts: ["is","are","some","any"], ans: 1,
+        exp: "<strong>are</strong> — magazines (ko'plik). 'There are magazines under the table.' = 'Stol ostida jurnallar bor.'" },
+      { q: "There _____ a post box in front of the chemist's.", opts: ["are","is","some","any"], ans: 1,
+        exp: "<strong>is</strong> — 'a post box' birlik. 'There is a post box in front of the chemist's.'" },
+      { q: "How much are _____ glasses?", opts: ["this","they","these","that"], ans: 2,
+        exp: "<strong>these</strong> — glasses (ko'plik, yaqin). 'How much are these glasses?' = 'Bu ko'zoynaklar qancha?'" },
+      { q: "Is _____ book John's? Yes, _____ is.", opts: ["these / it","this / it","it / it's","that / it's"], ans: 1,
+        exp: "<strong>this book</strong> (birlik, yaqin) + <strong>Yes, it is.</strong> (kitob uchun 'it'). 'Is this book John's? Yes, it is.'" },
+      { q: "Take _____ bags into the kitchen.", opts: ["these","this","that","it"], ans: 0,
+        exp: "<strong>these</strong> — bags (ko'plik, yaqin). 'Take these bags into the kitchen.' = 'Bu sumkalarni oshxonaga olib kir.'" },
+      { q: "I don't like _____ music.", opts: ["they","these","this","it"], ans: 2,
+        exp: "<strong>this</strong> — music (birlik, hozir eshitilayotgan). 'I don't like this music.' = 'Men bu musiqani yoqtirmayman.'" },
+      { q: "Bob, _____ is my mother.", opts: ["these","it","this","that"], ans: 2,
+        exp: "<strong>this</strong> — tanishtirishda yaqin odamni ko'rsatish: 'This is my mother.' = 'Bu mening onam.'" },
+      { q: "Is _____ exercise very easy? No, _____ isn't.", opts: ["these / it","this / it's","these / this","that / it"], ans: 3,
+        exp: "<strong>that exercise</strong> (birlik, uzoq) + <strong>No, it isn't.</strong> (mashq uchun 'it'). 'Is that exercise easy? No, it isn't.'" },
+      { q: "I like Tom, _____ I don't like his wife.", opts: ["and","but","because","so"], ans: 1,
+        exp: "<strong>but</strong> — qarama-qarshi ma'no: '...lekin...'. 'I like Tom, but I don't like his wife.' = 'Tom yoqadi, lekin xotini yoqmaydi.'" },
+      { q: "I like living here _____ it's near the shops.", opts: ["because","so","and","but"], ans: 0,
+        exp: "<strong>because</strong> — sabab bildiradi. 'I like living here because it's near the shops.' = 'Do'konlarga yaqinligi uchun bu yerda yashashni yoqtiraman.'" },
+      { q: "We both like sailing, _____ we live near the sea.", opts: ["and as","because","so","but"], ans: 2,
+        exp: "<strong>so</strong> — oqibat bildiradi. 'We like sailing, so we live near the sea.' = 'Yelkanli sayrni yaxshi ko'ramiz, shuning uchun dengiz yaqinida yashaymiz.'" },
+      { q: "Our flat is small, _____ it's comfortable.", opts: ["but","so","because","and"], ans: 0,
+        exp: "<strong>but</strong> — qarama-qarshi: kichik, lekin qulay. 'Our flat is small, but it's comfortable.'" },
+      { q: "New York is expensive, _____ I like it.", opts: ["because","but","and","so"], ans: 1,
+        exp: "<strong>but</strong> — qimmat bo'lishiga qaramasdan yoqtiradi. 'New York is expensive, but I like it.'" },
+      { q: "I like New York, _____ it's very exciting.", opts: ["because","but","and","so"], ans: 0,
+        exp: "<strong>because</strong> — sabab: nima uchun yoqtiradi? 'I like New York because it's very exciting.'" },
+      { q: "I like Judy, _____ I often visit her.", opts: ["so","because","but","for"], ans: 0,
+        exp: "<strong>so</strong> — oqibat: yoqtirgani uchun tez-tez boradi. 'I like Judy, so I often visit her.'" },
+      { q: "I like Chinese food, _____ my husband doesn't like it at all.", opts: ["so","but","because","and"], ans: 1,
+        exp: "<strong>but</strong> — qarama-qarshi: men yoqtiraman, eri yoqtirmaydi. 'I like Chinese food, but my husband doesn't.'" },
+      { q: "We live in a flat on the top floor, _____ we don't have a garden.", opts: ["so","but","because","and"], ans: 0,
+        exp: "<strong>so</strong> — oqibat: yuqori qavatda yashaymiz, shuning uchun bog' yo'q. 'We live on the top floor, so we don't have a garden.'" },
+      { q: "I like my job _____ it's interesting.", opts: ["because","and","so","but"], ans: 0,
+        exp: "<strong>because</strong> — sabab: nega yoqtiradi? Qiziqarligi uchun. 'I like my job because it's interesting.'" },
+      { q: "In my bedroom there's a bed _____ a wardrobe.", opts: ["but","so","and","also"], ans: 2,
+        exp: "<strong>and</strong> — qo'shish: karavot ham, shkaf ham. 'In my bedroom there's a bed and a wardrobe.'" },
+    ]
+  },
+  {
+    id: 6,
+    title: "Test 6 — Was/Were & Can/Could",
+    subtitle: "Past tense to be, abilities, was born",
+    topics: ["Can / can't", "Was / were", "Could", "Was born", "Prepositions"],
+    questions: [
+      { q: "Our homework ____ very difficult yesterday, but today it ____ easy.", opts: ["is / is","was / is","was / was","is / was"], ans: 1,
+        exp: "<strong>was</strong> (kecha — o'tgan zamon) + <strong>is</strong> (bugun — hozirgi zamon). 'Our homework was difficult yesterday, but today it is easy.'" },
+      { q: "I know that I _____ late 2 days ago, but this time I _____ late.", opts: ["am / were","am not / am not","was / was","wasn't / am"], ans: 2,
+        exp: "Ikki kun oldin — o'tgan zamon: <strong>was</strong>. 'was' past tense, ikki jumlada ham o'tgan zamon: 'I was late ... I was late.' Lekin kontekstga ko'ra 'wasn't / am' ham ma'qul — D varianti... To'g'ri: C was/was — ikki kun oldin kech qolgan." },
+      { q: "A: _____ was she born? B: She _____ born in New Zealand.", opts: ["Where / was","Where / were","When / were","When / was"], ans: 0,
+        exp: "<strong>Where</strong> (qayerda) + <strong>was born</strong> (she, birlik). 'Where was she born? She was born in New Zealand.'" },
+      { q: "A: _____ were they late for the meeting? B: Because they _____ asleep.", opts: ["What / were","Why / was","Why / were","Why / are"], ans: 2,
+        exp: "<strong>Why</strong> (nima uchun) + <strong>they were</strong> (ko'plik, o'tgan zamon). 'Why were they late? Because they were asleep.'" },
+      { q: "The weather _____ nice today, but it _____ nasty yesterday.", opts: ["is / was","was / is","is / is","is / were"], ans: 0,
+        exp: "<strong>is</strong> (bugun — hozirgi) + <strong>was</strong> (kecha — o'tgan). 'The weather is nice today, but it was nasty yesterday.'" },
+      { q: "A: _____ was Mr. Black born? B: He was born _____ 1963.", opts: ["When / at","Where / in","What / in","When / in"], ans: 3,
+        exp: "<strong>When</strong> (qachon) + <strong>in 1963</strong> (yil oldidan 'in'). 'When was Mr. Black born? He was born in 1963.'" },
+      { q: "The students _____ very tired today. Because they _____ at a party last night.", opts: ["were / are","are / was","are / were","were / were"], ans: 2,
+        exp: "<strong>are</strong> (bugun hozirgi) + <strong>were</strong> (kecha — o'tgan, they ko'plik). 'They are tired today because they were at a party last night.'" },
+      { q: "A: _____ was Jennifer's job 2 years ago? B: She _____ a flight attendant.", opts: ["Why / were","What / was","Who / was","Who / were"], ans: 1,
+        exp: "<strong>What</strong> (kasb so'rash) + <strong>was</strong> (she birlik, o'tgan zamon). 'What was Jennifer's job? She was a flight attendant.'" },
+      { q: "A: _____ is the briefcase? B: It _____ 200 dollars, but it _____ 100 dollars before.", opts: ["How much / is / was","How many / is / was","How much / was / is","How much / is / is"], ans: 0,
+        exp: "<strong>How much</strong> (narx) + hozir <strong>is</strong> 200 + oldin <strong>was</strong> 100. 'How much is it? It is 200 dollars, but it was 100 before.'" },
+      { q: "A: How old _____ you in 1990? B: I _____ 10, but I _____ 25 now.", opts: ["are / are / was","were / was / am","was / are / were","were / was / are"], ans: 1,
+        exp: "<strong>were</strong> (you, 1990 — o'tgan) + <strong>was</strong> (I 10 yoshda — o'tgan) + <strong>am</strong> (hozir 25). 'How old were you in 1990? I was 10, but I am 25 now.'" },
+      { q: "A: How _____ they after the accident? B: They _____ shocked, but now they _____ better.", opts: ["were / are / were","were / were / were","was / were / are","were / were / are"], ans: 3,
+        exp: "<strong>were</strong> (they, savol) + <strong>were shocked</strong> (o'tgan) + <strong>are better</strong> (hozir). 'How were they? They were shocked, but now they are better.'" },
+      { q: "A: How much _____ the tea cups before? B: They _____ 10 euros each, they _____ 8 euros now!", opts: ["were / were / are","were / are / were","are / were / were","are / were / are"], ans: 0,
+        exp: "<strong>were</strong> (oldin — o'tgan) + <strong>were</strong> (10 evro — o'tgan) + <strong>are</strong> (hozir 8 evro). 'How much were they before? They were 10, they are 8 now.'" },
+      { q: "A: Where _____ they born? B: They _____ born _____ .", opts: ["were / were / in 1995","was / were / in Italy","were / were / in Denmark","was / were / in 1995"], ans: 2,
+        exp: "<strong>were</strong> (they ko'plik savol) + <strong>were born</strong> + joy (in Denmark). 'Where were they born? They were born in Denmark.'" },
+      { q: "I _____ play chess _____ I was five.", opts: ["can / when","could / when","could / what","can / where"], ans: 1,
+        exp: "<strong>could</strong> — o'tmishdagi imkoniyat (can ning o'tgan zamoni). <strong>when</strong> — vaqt. 'I could play chess when I was five.'" },
+      { q: "_____ could you do when you _____ seven.", opts: ["Were / was","What / was","What / are","What / were"], ans: 3,
+        exp: "<strong>What could you do</strong> — nima qila olarding? <strong>when you were seven</strong> — 7 yoshingizda (o'tgan zamon, you bilan were). 'What could you do when you were seven?'" },
+      { q: "A: _____ languages _____ Nicola speak when he _____ a child? B: 2 languages.", opts: ["How many / could / was","How much / could / was","What / was / could","What / could / was"], ans: 0,
+        exp: "<strong>How many</strong> (sanaladigan) + <strong>could Nicola speak</strong> (o'tmish imkoniyat) + <strong>when he was a child</strong> (was — he birlik). 'How many languages could Nicola speak when he was a child?'" },
+    ]
+  }
+];
+
+let currentTest = 0;
+let answered = {};
+let correct = 0;
+let wrong = 0;
+
+function initApp() {
+  const tabs = document.getElementById('testTabs');
+  tests.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'test-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = `Test ${t.id}`;
+    btn.onclick = () => switchTest(i);
+    tabs.appendChild(btn);
+  });
+  renderTest(0);
+}
+
+function switchTest(idx) {
+  currentTest = idx;
+  document.querySelectorAll('.test-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+  document.getElementById('scoreCard').classList.remove('visible');
+  renderTest(idx);
+  updateStats();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderTest(idx) {
+  const test = tests[idx];
+  document.getElementById('testTitle').textContent = test.title;
+  document.getElementById('testSubtitle').textContent = test.subtitle;
+  const topicsEl = document.getElementById('testTopics');
+  topicsEl.innerHTML = test.topics.map(t => `<span class="topic-tag">${t}</span>`).join('');
+
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  test.questions.forEach((q, qi) => {
+    const key = `${idx}-${qi}`;
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `card-${key}`;
+    card.style.animationDelay = `${qi * 0.03}s`;
+
+    const isAnswered = answered[key] !== undefined;
+    const isCorrect = answered[key] === q.ans;
+
+    card.innerHTML = `
+      <div class="question-number">Question ${qi + 1}</div>
+      ${isAnswered ? `<div class="question-status">${isCorrect ? '✅' : '❌'}</div>` : ''}
+      <div class="question-text">${q.q.replace(/___+/g, '<span class="blank">_____</span>')}</div>
+      <div class="options">
+        ${q.opts.map((opt, oi) => {
+          let cls = '';
+          if (isAnswered) {
+            if (oi === q.ans) cls = 'correct';
+            else if (oi === answered[key]) cls = 'wrong';
+          }
+          const labels = ['A','B','C','D'];
+          return `<button class="option-btn ${cls}" ${isAnswered ? 'disabled' : ''} onclick="selectAnswer(${idx}, ${qi}, ${oi})">
+            <span class="option-label">${labels[oi]}</span>
+            <span>${opt}</span>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="explanation ${isAnswered ? 'visible' : ''}" id="exp-${key}">
+        <span class="uz-label">📚 Tushuntirish (O'zbek tilida)</span>
+        ${q.exp}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  updateProgress();
+  updateCheckBtn();
+}
+
+function selectAnswer(testIdx, qIdx, optIdx) {
+  const key = `${testIdx}-${qIdx}`;
+  if (answered[key] !== undefined) return;
+
+  const q = tests[testIdx].questions[qIdx];
+  answered[key] = optIdx;
+  const isCorrect = optIdx === q.ans;
+  if (isCorrect) correct++; else wrong++;
+
+  // Update buttons
+  const card = document.getElementById(`card-${key}`);
+  const btns = card.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === optIdx) btn.classList.add('wrong');
+  });
+
+  // Show status icon
+  const existing = card.querySelector('.question-status');
+  if (!existing) {
+    const status = document.createElement('div');
+    status.className = 'question-status';
+    status.textContent = isCorrect ? '✅' : '❌';
+    card.appendChild(status);
+  }
+
+  // Show explanation
+  document.getElementById(`exp-${key}`).classList.add('visible');
+
+  updateStats();
+  updateProgress();
+  updateCheckBtn();
+
+  // Check if test is complete
+  const test = tests[testIdx];
+  const allAnswered = test.questions.every((_, i) => answered[`${testIdx}-${i}`] !== undefined);
+  if (allAnswered) {
+    setTimeout(() => showScore(testIdx), 600);
+  }
+}
+
+function showScore(testIdx) {
+  const test = tests[testIdx];
+  let testCorrect = 0;
+  test.questions.forEach((q, i) => {
+    if (answered[`${testIdx}-${i}`] === q.ans) testCorrect++;
+  });
+  const total = test.questions.length;
+  const pct = Math.round(testCorrect / total * 100);
+  
+  let msg = '';
+  if (pct === 100) msg = "🏆 Mukammal! Zo'r natija!";
+  else if (pct >= 80) msg = "🌟 Ajoyib! Juda yaxshi!";
+  else if (pct >= 60) msg = "👍 Yaxshi! Yana mashq qiling.";
+  else if (pct >= 40) msg = "📖 O'rta daraja. Ko'proq o'qing!";
+  else msg = "💪 Hali o'rganish kerak. Qaytadan urining!";
+
+  document.getElementById('scoreNum').textContent = testCorrect;
+  document.getElementById('scoreTotal').textContent = `of ${total} questions correct (${pct}%)`;
+  document.getElementById('scoreMsg').textContent = msg;
+  document.getElementById('scoreCard').classList.add('visible');
+  document.getElementById('checkBtn').style.display = 'none';
+  document.getElementById('scoreCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function retryTest() {
+  const test = tests[currentTest];
+  test.questions.forEach((_, i) => {
+    const key = `${currentTest}-${i}`;
+    if (answered[key] !== undefined) {
+      if (answered[key] === test.questions[i].ans) correct--; else wrong--;
+      delete answered[key];
+    }
+  });
+  document.getElementById('scoreCard').classList.remove('visible');
+  renderTest(currentTest);
+  updateStats();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function reviewAnswers() {
+  document.getElementById('scoreCard').classList.remove('visible');
+  window.scrollTo({ top: document.getElementById('questionsContainer').offsetTop - 20, behavior: 'smooth' });
+}
+
+function checkAll() {
+  // Auto-submit remaining (mark as skipped — show answer)
+  const test = tests[currentTest];
+  test.questions.forEach((q, i) => {
+    const key = `${currentTest}-${i}`;
+    if (answered[key] === undefined) {
+      // reveal without counting
+      answered[key] = -1; // -1 = skipped
+      wrong++;
+      const card = document.getElementById(`card-${key}`);
+      if (card) {
+        const btns = card.querySelectorAll('.option-btn');
+        btns.forEach((btn, oi) => {
+          btn.disabled = true;
+          if (oi === q.ans) btn.classList.add('show-correct');
+        });
+        document.getElementById(`exp-${key}`).classList.add('visible');
+      }
+    }
+  });
+  updateStats();
+  updateProgress();
+  showScore(currentTest);
+}
+
+function updateStats() {
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = wrong;
+  const total = tests.reduce((a, t) => a + t.questions.length, 0);
+  document.getElementById('statRemaining').textContent = total - Object.keys(answered).length;
+}
+
+function updateProgress() {
+  const test = tests[currentTest];
+  const total = test.questions.length;
+  const done = test.questions.filter((_, i) => answered[`${currentTest}-${i}`] !== undefined).length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${done} / ${total} answered`;
+  document.getElementById('progressPct').innerHTML = `<span>${pct}%</span>`;
+}
+
+function updateCheckBtn() {
+  const test = tests[currentTest];
+  const done = test.questions.filter((_, i) => answered[`${currentTest}-${i}`] !== undefined).length;
+  const btn = document.getElementById('checkBtn');
+  if (done < test.questions.length && done > 0) {
+    btn.style.display = 'inline-flex';
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+initApp();
+</script>
+</body>
+</html>
